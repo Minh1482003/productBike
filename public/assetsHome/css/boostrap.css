@@ -1,0 +1,35 @@
+/* banner */
+@keyframes zoom {
+    0% {
+        transform: scale(1); /* Kích thước ban đầu */
+    }
+    50% {
+        transform: scale(1.1); /* Phóng to */
+    }
+    100% {
+        transform: scale(1); /* Trở về kích thước ban đầu */
+    }
+}
+ /* Đáp ứng thiết bị nhỏ */
+ @media (max-width: 768px) {
+    .product-info {
+      text-align: center;
+    }
+  }
+
+.container{
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+h1{
+    line-height: 1.2;
+    margin-top: 0;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+}
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-size: 20px;
+}
