@@ -8,7 +8,6 @@ export default defineConfig({
         input: [
           'resources/css/admin/style.css',
           'resources/js/admin/script.js',
-          'resources/js/admin/tinymce.js'
         ],
         refresh: true,
     }),
