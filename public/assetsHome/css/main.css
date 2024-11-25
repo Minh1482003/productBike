@@ -1,0 +1,164 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    /* 1.6rem = 16px */
+    line-height: 1.6rem;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
+.bd {
+    border: 2px solid #ccc;
+    box-shadow: 5px 6px 8px #ccc;
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+}
+
+.grid {
+    width: 1300px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.grid_ft {
+    width: 1140px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.header {
+    height: 75px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.logo {
+    margin-top: 3px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+
+ul {
+    list-style: none;
+    padding-top: 4px;
+}
+
+ul li {
+    display: inline-block;
+    position: relative;
+}
+
+ul li a {
+    display: block;
+    padding: 20px 20px;
+    color: #000;
+    text-decoration: none;
+    text-align: left;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+ul li ul.dropdown_bike li {
+    display: block;
+    width: 250px;
+}
+
+ul li ul.dropdown_bike {
+    width: 210%;
+    background-color: #fff;
+    position: absolute;
+    z-index: 999;
+    display: none;
+}
+
+ul li ul.dropdown_biker {
+    width: 120%;
+    background-color: #fff;
+    position: absolute;
+    z-index: 999;
+    display: none;
+}
+
+ul li .link__navbar--items:hover {
+    background-color: #fff;
+    color: #fcc419;
+}
+
+ul li .link__drop--items:hover {
+    background-color: #fff;
+    color: #007bff;
+}
+
+ul li:hover ul.dropdown_bike {
+    display: block;
+}
+
+ul li:hover ul.dropdown_biker {
+    display: block;
+}
+
+.icon_admin {
+    float: right;
+}
+
+
+/* article */
+
+
+/* Footer */
+.footer {
+    width: 100%;
+    height: 450px;
+    background-color: #292929;
+}
+
+.nav--ft {
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list_nav--ft {
+    display: flex;
+    flex-direction: column;
+}
+
+.main_items-nav {
+    font-weight: 600;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
+.link_items {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 10px 0px;
+}
+
+.icon--ft {
+    display: flex;
+}
+
+.hv:hover {
+    color: #007bff;
+}
+
+.para {
+    line-height: 1.5;
+}
+
+.mg1 {
+    margin-top: 60px;
+}

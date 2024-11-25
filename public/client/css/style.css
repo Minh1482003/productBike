@@ -1,0 +1,14 @@
+.quantity-cart {
+  width: 100px;
+}
+
+.quantity-cart button {
+  width: 30px;
+}
+
+.delete-cart:hover {
+  color: red;
+  transform: scale(1.5);
+  font-weight: 600;
+  transition: transform 0.2s ease-in-out, color 2s ease-in-out; 
+}
