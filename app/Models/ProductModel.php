@@ -30,11 +30,7 @@ class ProductModel extends Model {
   ];
 
   protected $attributes = [
-    'Price_hour' => 0,
-    'Price_day' => 0,
-    'Position' => 0,
     'Deleted' => 0,
-    'View' => 0, 
     'Status' => 'active'
   ];
 
@@ -49,6 +45,7 @@ class ProductModel extends Model {
           'source' => 'Name',
           'onUpdate' => true,
           'separator' => '-',
+          'method' => 'makeSluggable',
           'unique' => true,
         ] 
     ];
