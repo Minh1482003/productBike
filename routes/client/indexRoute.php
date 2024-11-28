@@ -13,8 +13,20 @@ Route::get('/detail/{slug}', [HomeController::class, 'detail'])->name('product.d
 Route::get('/products', [HomeController::class, 'productBuy'])->name('product.buy')
   ->middleware(GetInforUser::class);
 
-Route::post('/createCart', [HomeController::class, 'cartProduct'])->name('cart.create')
+Route::get('/cart', [HomeController::class, 'cartProduct'])->name('cart.product')
   ->middleware(GetInforUser::class);
 
-Route::get('/cart', [HomeController::class, 'cartProduct'])->name('cart.product')
+Route::get('/cart/createCart/{Id_SP}', [HomeController::class, 'createCart'])->name('cart.create')
+  ->middleware(GetInforUser::class);
+
+Route::delete('/cart/delete/{Id_SP}', [HomeController::class, 'deleteCart'])->name('cart.delete')
+  ->middleware(GetInforUser::class);
+
+Route::post('/cart/checkout', [HomeController::class, 'checkout'])->name('cart.checkout')
+  ->middleware(GetInforUser::class);
+
+Route::post('/cart/checkoutfinal', [HomeController::class, 'checkoutFinal'])->name('cart.checkoutfinal')
+  ->middleware(GetInforUser::class);
+
+Route::patch('/updateUser', [HomeController::class, 'updateUser'])->name('update.User')
   ->middleware(GetInforUser::class);

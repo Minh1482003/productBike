@@ -35,7 +35,7 @@ class UserModel extends Authenticatable {
 
     protected $attributes = [
         'Id_role' => 0,
-      ];
+    ];
 
     protected function casts(): array {
         return [

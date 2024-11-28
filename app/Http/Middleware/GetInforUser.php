@@ -16,11 +16,13 @@ class GetInforUser {
         if (session()->has($sessionKey)) {
           $userData = session($sessionKey);
 
+          $req->merge($userData->toArray());
+
           view()->share('userData', $userData);
           return $next($req);
         }
-
-        $user = UserModel::select('Name', 'Image','Username', 'Email', 'SDT', 'Status',	'Address')
+        
+        $user = UserModel::select('Id_KH', 'Name', 'Image','Username', 'Email', 'SDT', 'Status',	'Address')
         ->where(['Token' => $Token, 'Deleted' => false, 'Status' => 'active'])->first();
 
         if($user == NULL){
@@ -31,7 +33,9 @@ class GetInforUser {
 
           // Lưu phiên dữ liệu đăng nhập
           Session::put($sessionKey, $userData);
-          
+      
+          $req->merge($userData->toArray());
+
           view()->share('userData', $userData);
         }
       }

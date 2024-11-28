@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assetsHome/css/slider.css') }}">
     <link rel="stylesheet" href="{{ asset('assetsHome/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assetsHome/css/xedap.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/css/style.css') }}">
 
 
     <link rel="icon" type="image/x-icon" href="../assest/img/logo.jpg">
@@ -24,6 +25,7 @@
 </head>
 
 <body>
+  @include('admin.mixins.alert', ['type' => session('type'), 'message' => session('message'), 'time' => 3000])
     <!-- Header -->
   <div class="bd">
     <div class="grid">
@@ -91,10 +93,10 @@
         
             <!-- Hành động xuất hiện khi hover -->
             <div class="product-hover-actions">
-              <button type="button" title="Thêm vào giỏ">
+              <a href="{{ route('cart.create', ['Id_SP' => $item->Id_SP]) }}">
                 <i class="fas fa-shopping-cart"></i>
-              </button>
-              <a href="#" title="Xem chi tiết">
+              </a>
+              <a href="{{ route('product.detail', ['slug' => $item->Slug]) }}" title="Xem chi tiết">
                 <i class="fas fa-eye"></i>
               </a>
             </div>
@@ -237,6 +239,7 @@
       </div>
     </footer>
 
+    <script src="{{ asset('admin/js/script.js') }}"></script>
 </body>
 
 </html>
