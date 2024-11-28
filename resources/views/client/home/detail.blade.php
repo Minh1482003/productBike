@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dự án 1</title>
-    <link rel="stylesheet" href="{{ asset('assetsProduct/css/style.css') }}">
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -14,6 +12,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
     rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('assetsProduct/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/css/style.css') }}">
 
     <style>
     #infor_user {
@@ -119,7 +119,7 @@
                     <button class="btn">+</button>
                 </div>
                 <div class="actions">
-                    <a href="" class="add-to-cart">THÊM VÀO GIỎ</a> 
+                    <a href="{{ route('cart.create', ['Id_SP' => $product->Id_SP]) }}" class="add-to-cart">THÊM VÀO GIỎ</a> 
                     <button class="buy-now">MUA NGAY</button>
                 </div>
             </div>
@@ -233,5 +233,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{{ asset('admin/js/script.js') }}"></script>
 </body>
 </html>

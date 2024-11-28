@@ -23,6 +23,7 @@ class RequireAuthenAdmin {
         view()->share($userData);
         
         $req->merge($userData);
+        
         return $next($req);
       }
 

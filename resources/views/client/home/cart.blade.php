@@ -6,56 +6,44 @@
     <h3>Giỏ hàng</h3>
     <div class="row">
 
-      <div class="col-8 border" id="cartQuantity">
+      <div class="col-8 border">
+        
         <!-- item products -->
-        <div class="p-2 d-flex align-items-center border-bottom border-2">
-          <input type="checkbox" class="form-check-input mx-2" name="">
+        @foreach($productCarts as $item)
+          <div class="p-2 d-flex align-items-center border-bottom border-2" div-product>
+            <input hidden type="number" value="{{ $item->Price }}" price-origin>
 
-          <img src="https://bizweb.dktcdn.net/thumb/compact/100/521/820/products/wohoxtouringdrybag6-1296x-0f6eb4af893443d4b233f19bb40c6c1e.jpg" style="width: 70px">
-          
-          <span class="col-4">Xe đạp đường dài</span>
+            <input type="checkbox" class="form-check-input mx-2" name="checkCart">
 
-          <input 
-            type="text" style="width: 100px" class="text-end border-0 col-4 ms-5 text-danger fw-bold" 
-            name="Price" 
-            value="1000000">
-          <span class="text-danger">₫</span>
+            <input hidden type="number" value="{{ $item->Id_SP }}" name="id-product">
 
-          <div class="col-3 border quantity-cart ms-5" style="width: 101px">
-            <button class="border-0 btn btn-light btn-sm" value="-" button-quantity>-</button>
+            <img src="{{ $item->Image }}" style="width: 100px" name="image-cart">
+            
+            <span class="col-4" name="name-cart">{{ $item->Name }}</span>
+            
             <input 
-              type="text" style="width: 30px" class="col-3 text-center border-0" min="0"
-              value="1">
-            <button class="border-0 btn btn-light btn-sm" value="+" button-quantity>+</button>
+              type="text" style="width: 100px" class="text-end border-0 col-4 ms-5 text-danger fw-bold" 
+              disabled name="Price" 
+              value="{{ $item->Price * $item->Quantity}}">
+            <span class="text-danger">₫</span>
+
+            <div class="col-3 border quantity-cart ms-5" style="width: 101px">
+              <button class="border-0 btn btn-light btn-sm" value="-" button-quantity>-</button>
+              <input 
+                disabled
+                type="text" style="width: 30px" class="col-3 text-center border-0" min="0"
+                name="input-quantity"
+                value="{{ $item->Quantity }}">
+              <button class="border-0 btn btn-light btn-sm" value="+" button-quantity>+</button>
+            </div>
+            
+            <button class="border-0 btn ms-4 delete-cart"
+              button-delete  
+              data-id="{{ $item->Id_SP }}"
+              ><i class="bi bi-x-lg"></i></button>
+            
           </div>
-          
-          <button class="border-0 btn ms-4 delete-cart"><i class="bi bi-x-lg"></i></button>
-        </div>
-
-        <div class="p-2 d-flex align-items-center border-bottom border-2">
-          <input type="checkbox" class="form-check-input mx-2" name="">
-
-          <img src="https://bizweb.dktcdn.net/thumb/compact/100/521/820/products/wohoxtouringdrybag6-1296x-0f6eb4af893443d4b233f19bb40c6c1e.jpg" style="width: 70px">
-          
-          <span class="col-4">Xe đạp đường dài</span>
-
-          <input 
-            type="text" style="width: 100px" class="text-end border-0 col-4 ms-5 text-danger fw-bold" 
-            name="Price" 
-            value="1000000">
-          <span class="text-danger">₫</span>
-
-          <div class="col-3 border quantity-cart ms-5" style="width: 101px">
-            <button class="border-0 btn btn-light btn-sm" value="-" button-quantity>-</button>
-            <input 
-              type="text" style="width: 30px" class="col-3 text-center border-0" min="0"
-              value="1">
-            <button class="border-0 btn btn-light btn-sm" value="+" button-quantity>+</button>
-          </div>
-          
-          <button class="border-0 btn ms-4 delete-cart"><i class="bi bi-x-lg"></i></button>
-        </div>
-
+        @endforeach
         <!-- End item products -->
         
       </div>
@@ -66,9 +54,9 @@
           <div class="d-flex justify-content-between align-items-center">
             <span class="fw-normal">Tổng cộng:</span>
             <div class="input-group" style="max-width: 150px">
-              <input type="text" 
+              <input type="text" disabled
                     class="form-control text-danger bg-light fw-bold text-end border-0 p-0" 
-                    value="8490000" 
+                    value="0" 
                     name="toltal_price"
                     style="max-width: 200px" 
                     readonly>
@@ -78,18 +66,24 @@
         </div>
 
         <div class="row mt-5">
-          <button type="button" class="btn btn-dark">Thanh toán</button>
+          <button type="button" class="btn btn-dark" btn-submit-cart>Thanh toán</button>
         </div>
       </div>
       </div>
   </div>
   
+  <form
+    form-delete-item
+    action=""
+    method="POST"
+    data-path="/cart/delete">
+    @csrf
+    @method('DELETE')</form>
   
-  <form action="/cart/add" method="POST" id="add-to-cart-form">
-
-    <input type="hidden" name="product_id" value="12345">
-    <input type="hidden" name="quantity" value="1">
-    
+  <form action="/cart/checkout" method="POST" from-submit-cart>
+    @csrf
+    <input type="hidden" name="data">
+    <input type="hidden" name="toltalCart">
   </form>
 
 @endsection

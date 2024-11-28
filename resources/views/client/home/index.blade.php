@@ -105,9 +105,9 @@
 
                         <!-- Hành động xuất hiện khi hover -->
                         <div class="product-hover-actions">
-                            <button type="button" title="Thêm vào giỏ">
+                            <a href="{{ route('cart.create', ['Id_SP' => $item->Id_SP]) }}">
                                 <i class="fas fa-shopping-cart"></i>
-                            </button>
+                            </a>
                             <a href="{{ route('product.detail', ['slug' => $item->Slug]) }}" title="Xem chi tiết">
                                 <i class="fas fa-eye"></i>
                             </a>
