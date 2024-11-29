@@ -16,16 +16,16 @@ class RequireAuthenAdmin {
     }
 
     try {
-      $cacheKey = 'user_data_' . $Token;
+      // $cacheKey = 'user_data_'. $Token;
        
-      if (Cache::has($cacheKey)) {
-        $userData = Cache::get($cacheKey);
-        view()->share($userData);
+      // if (Cache::has($cacheKey)) {
+      //   $userData = Cache::get($cacheKey);
+      //   view()->share($userData);
         
-        $req->merge($userData);
+      //   $req->merge($userData);
         
-        return $next($req);
-      }
+      //   return $next($req);
+      // }
 
       $user = UserModel::select('Name', 'Image','Username', 'Id_role')
       ->where(['Token' => $Token, 'Deleted' => false, 'Status' => 'active'])->first();
@@ -53,7 +53,7 @@ class RequireAuthenAdmin {
         ];
 
         // Cache data trong 20 phút
-        Cache::put($cacheKey, $userData, now()->addMinutes(20));
+        // Cache::put($cacheKey, $userData, now()->addMinutes(20));
         
         view()->share($userData);
 

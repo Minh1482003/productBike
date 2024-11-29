@@ -15,3 +15,6 @@ Route::prefix('accounts')->group(base_path('routes/admin/AccountRoute.php'));
 
 // [GET] admin/roles
 Route::prefix('roles')->group(base_path('routes/admin/RoleRoute.php'));
+
+// [GET] admin/roles
+Route::prefix('bills')->group(base_path('routes/admin/BillRoute.php'));

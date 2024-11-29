@@ -68,7 +68,7 @@
                             </li>
                         @endif
                         <li class="icon_items">
-                            <a href="#" class="link_icon"><i class="ri-shopping-cart-fill"></i></a>
+                            <a href="{{ route('cart.product') }}" class="link_icon"><i class="ri-shopping-cart-fill"></i></a>
                         </li>
                     </ul>
                 </div>

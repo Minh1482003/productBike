@@ -135,4 +135,22 @@ flex: 1;
 height: 1px;
 background: #eee;
 }
+
+.btn-change a i,
+.btn-change button i {
+   color: rgb(204, 0, 255);
+   transform: scale(2);
+}
+
+.btn-change button {
+  transform:translateY(-2px);
+}
+
+.btn-change a i:hover,
+.btn-change button i:hover {
+  transform: scale(2);
+  color: rgb(8, 0, 10);
+  transition: transform 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
 /* End role */

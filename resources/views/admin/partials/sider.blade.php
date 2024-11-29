@@ -30,5 +30,8 @@
           <a href="/admin/roles">Nhóm quyền</a>
       </li>
       @endif
+      <li>
+          <a href="/admin/bills">Đơn hàng</a>
+      </li>
   </div>
 </div>

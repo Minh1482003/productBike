@@ -82,15 +82,15 @@
                       button-change-status> Dừng hoạt động</a>
                   @endif
                 </td>
-                <td>
-                  <a class="btn btn-secondary btn-sm mr-1"
+                <td class="btn-change">
+                  <a class="mx-2"
                     href="/admin/products/detail/{{ $item->Id_SP }}"><i class="bi bi-eye"></i></a>
 
-                  <a class="btn btn-warning btn-sm mr-1"
-                    href="/admin/products/edit/{{ $item->Id_SP }}"><i class="bi bi-pencil-square text-light"></i></a>
+                  <a class="mx-2"
+                    href="/admin/products/edit/{{ $item->Id_SP }}"><i class="bi bi-pencil-square"></i></a>
 
-                  <button class="btn  btn-sm btn-danger"
-                    button-delete data-id="{{ $item->Id_SP }}"><i class="bi bi-trash text-light"></i></button>
+                  <button class="btn"
+                    button-delete data-id="{{ $item->Id_SP }}"><i class="bi bi-trash"></i></button>
                 </td>
               </tr>
             @endforeach
