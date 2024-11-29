@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RequireAuthenAdmin;
+use Illuminate\Support\Facades\File;
+
 
 //Route admin
 Route::prefix('admin')
@@ -15,9 +17,6 @@ require base_path('routes/client/indexRoute.php');
 Route::prefix('authen')->group(base_path('routes/auth/Authentication.php'));
 
 
-
-
-use Illuminate\Support\Facades\File;
 
 Route::get('/provinces', function () {
   $path = base_path('node_modules/hanhchinhvn/dist/tinh_tp.json');

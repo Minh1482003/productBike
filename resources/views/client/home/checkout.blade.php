@@ -21,6 +21,7 @@
             <form action="{{ route('update.User') }}" method="POST" form-update-address>
               @csrf 
               @method('PTACH')
+              <input hidden type="text" value="{{ $userData->Address }}" input-get-address>
               <div class="form-floating"> 
                 <input type="email" class="form-control"
                   name="Email" value="{{ $userData->Email }}">
@@ -35,14 +36,14 @@
 
               <div class="form-floating">
                 <input type="text" class="form-control" 
-                  name="SDT" value="{{ $userData->SDT }}">
+                  name="Phone" value="{{ $userData->SDT }}">
                 <label for="floatingInputGrid">Số điện thoại:</label>
               </div>
       
               <div class="form-floating">
                 <select class="form-select" id="province" 
                   name="provinces" aria-label="Floating label select example">
-                  <option selected>---</option>
+                  <option selected option-province>---</option>
                 </select>
                 <label>Tỉnh thành</label>
               </div>
@@ -51,7 +52,7 @@
                 <select disabled class="form-select" 
                   name="district"
                   id="district" aria-label="Floating label select example">
-                  <option selected>---</option>
+                  <option selected option-district>---</option>
                 </select>
                 <label>Quận huyện</label>
               </div>
@@ -59,7 +60,7 @@
               <div class="form-floating">
                 <select disabled class="form-select" id="wards" 
                   name="wards" aria-label="Floating label select example">
-                  <option selected>---</option>
+                  <option selected option-wards>---</option>
                 </select>
                 <label>Phường xã</label>
               </div>

@@ -10,20 +10,25 @@ class GetInforUser {
     try {
       $Token = $req->cookie('Token'); 
       
-      if($Token){
-        $sessionKey = 'user_data_'.$Token;
+      if($Token != NULL){
+        // $sessionKey = 'user_data_'.$Token;
         
-        if (session()->has($sessionKey)) {
-          $userData = session($sessionKey);
+        // if (session()->has($sessionKey)) {
+          // $userData = session($sessionKey);
 
-          $req->merge($userData->toArray());
+          // $req->merge($userData->toArray());
 
-          view()->share('userData', $userData);
-          return $next($req);
-        }
+          // view()->share('userData', $userData);
+          // return $next($req);
+        // }
+
+        // dd($Token);
+        // return;
         
         $user = UserModel::select('Id_KH', 'Name', 'Image','Username', 'Email', 'SDT', 'Status',	'Address')
         ->where(['Token' => $Token, 'Deleted' => false, 'Status' => 'active'])->first();
+
+        
 
         if($user == NULL){
           return redirect("authen/login")->with(['type' => 'warning', 'message' => 'Tài khoản không tồn tại !']);
@@ -32,7 +37,7 @@ class GetInforUser {
           $userData = $user;
 
           // Lưu phiên dữ liệu đăng nhập
-          Session::put($sessionKey, $userData);
+          // Session::put($sessionKey, $userData);
       
           $req->merge($userData->toArray());
 

@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller {
   //[GET] index
   public function index(Request $req) {
+    // return "ok";
     $find = [
       ['Deleted', '=', '0'],
       ['Buy_or_rent', '=', 'buy'],
@@ -114,7 +115,7 @@ class HomeController extends Controller {
     FROM cart
     JOIN product ON cart.Id_SP = product.Id_SP
     JOIN user ON cart.Id_KH = user.Id_KH
-    WHERE user.Id_KH = ? AND product.Buy_or_rent = ?", [$req->Id_KH, 'buy']);
+    WHERE user.Id_KH = ? AND product.Buy_or_rent = ? AND product.Deleted = 'false' ", [$req->Id_KH, 'buy']);
 
     return view("client/home/cart", [
       'productCarts' => $productCarts,
@@ -235,36 +236,40 @@ class HomeController extends Controller {
 
   // [PATCH] updateUser
   public function updateUser(Request $req) {
-    return response()->json([
-      'success' => true,
-      'message' => 'Cập nhật thành công',
-      'data' => $updatedData
-    ]);
+
+    $addressUpdate = NULL;
+    if(isset($req->provincesUD) && $req->provincesUD != "---"){
+      $provinceId = $req->provincesUD; // Mã tỉnh
+      // $province = Http::get("https://provinces.open-api.vn/api/p/{$provinceId}");
   
-    $provinceId = $req->provinces; // Mã tỉnh
-    $province = Http::get("https://provinces.open-api.vn/api/p/{$provinceId}");
+      $districtId = $req->districtUD; // Mã quận/huyện
+      // $district = Http::get("https://provinces.open-api.vn/api/d/{$districtId}");
+  
+      $wardsId = $req->wardsUD; // Mã xã/phường
+      // $wards = Http::get("https://provinces.open-api.vn/api/w/{$wardsId}");
+      $addressDetail = $req->addressUD;
+      
+      $addressUpdate = "{$provinceId}__{$districtId}__{$wardsId}__{$addressDetail}";
+    }
 
-    $districtId = $req->district; // Mã quận/huyện
-    $district = Http::get("https://provinces.open-api.vn/api/d/{$districtId}");
-
-    $wardsId = $req->wards; // Mã xã/phường
-    $wards = Http::get("https://provinces.open-api.vn/api/w/{$wardsId}");
-
-    $addressUser = "{$province['name']}__{$district['name']}__{$wards['name']}__{$req->addressDetail}";
-    
     $user = [
-      'Name' => $req->Name,
-      'Email' => $req->Email,
-      'SDT' => $req->SDT,
-      'Address' => $addressUser,
+      'Name' => $req->NameUD,
+      'Email' => $req->EmailUD,
+      'SDT' => $req->SDTUD,
     ]; 
     
+    if($addressUpdate != NULL) $user['Address'] =  $addressUpdate;
+
     $ok = UserModel::where('Id_KH', $req->Id_KH)->update($user);
 
     if($ok){
-      return redirect()->back()->with(['type' => 'success', 'message' => 'Cập nhật thông tin thành công']);
+      return response()->json([
+        'Alert' => "cập nhật thông tin thành công"
+      ]);
     } else {
-      return redirect()->back()->with(['type' => 'success', 'danger' => 'Cập nhật thông tin thất bại!']);
+      return response()->json([
+        'Alert' => "Cập nhật thông tin thất bại!"
+      ]);
     }
   }
 }

@@ -192,32 +192,91 @@ if(btnCheckout){
 //End Submit checkout
 
 //Update address
-document.querySelector('[form-update-address]').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
+const formUserdata = document.querySelector('[form-update-address]');
+if(formUserdata){
 
-  try {
-    const response = await fetch("http://127.0.0.1:8000/updateUser", {
-    headers: {
-      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    },
-    method: 'PATCH',
-    body: formData
-  });
+  formUserdata.addEventListener("submit", async (e) =>{
+    e.preventDefault();
 
-  const data = await response.json();
+    const dataForm = {
+      NameUD: e.target.Name.value,
+      EmailUD: e.target.Email.value,
+      SDTUD: e.target.Phone.value,
+      provincesUD: e.target.provinces.value,
+      districtUD: e.target.district.value,
+      wardsUD: e.target.wards.value,
+      addressUD: e.target.addressDetail.value,
+    };
 
-  if (data.success) {
-      alert(data.message);
-      console.log(data.data);
-  } else {
-      alert('Cập nhật thất bại');
-  }
-  } catch (error) {
-      console.error('Error:', error);
-      alert('Có lỗi xảy ra');
-  }
-});
+    // console.log(dataForm);
+    // return;
+    try {
+      const response = await fetch("http://127.0.0.1:8000/updateUser", {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      },
+      method: 'PATCH',
+      body: JSON.stringify(dataForm)
+    });
 
+    const data = await response.json();
+
+    // console.log(data); 
+
+    alert(data.Alert);
+
+    return;
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Có lỗi xảy ra');
+    }
+  })
+}
 //End update address
 
+//Render address 
+const inputGetAddress = document.querySelector('[input-get-address]').value;
+
+async function getAddress(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return Object.values(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+const getInforAddress = async ()=> {
+  if(inputGetAddress){
+    [provinceId, districtId, wardsId, addressDetail] = inputGetAddress.split('__');
+  
+    let [NameProvince, ValueProvince] = await getAddress(`https://provinces.open-api.vn/api/p/${provinceId}`);
+    let [NameDistrict, ValueDistrict] = await getAddress(`https://provinces.open-api.vn/api/d/${districtId}`);
+    let [NameWards, ValueWards] = await getAddress(`https://provinces.open-api.vn/api/w/${wardsId}`);
+
+    let optionProvince = document.querySelector("[option-province]");
+    optionProvince.innerHTML = NameProvince;
+    optionProvince.value = ValueProvince;
+
+    let optionDistrict = document.querySelector("[option-district]");
+    optionDistrict.innerHTML = NameDistrict;
+    optionDistrict.value = ValueDistrict;
+
+    let optionWards = document.querySelector("[option-wards]");
+    optionWards.innerHTML = NameWards;
+    optionWards.value = ValueWards;
+
+    let inputDetailAddress = document.querySelector("input[name='addressDetail']");
+    inputDetailAddress.value = addressDetail;
+  } 
+}
+if(inputGetAddress){
+  getInforAddress();
+}
+
+
+
+//End render address 
