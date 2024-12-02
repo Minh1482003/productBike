@@ -1,17 +1,6 @@
 @extends('client.layouts.default')
 
 @section('content')
-    <style>
-    html {
-        font-size: 62.5%;
-        /* 1.6rem = 16px */
-        line-height: 1.6rem;
-        font-family: "Roboto", sans-serif;
-        box-sizing: border-box;
-    }
-
-    </style>
-
     <!-- SlideShow -->
     <div id="demo" class="carousel slide" data-ride="carousel">
 

@@ -103,6 +103,47 @@
             </div>
           </div>
         </div>
+        <div class="card mt-3">
+          <h5 class="card-header border">Quy tắc đặt hàng tại Bike Shop</h5>
+          <div class="card-body">
+          <ul>
+            <li>
+            <p><span style="color: rgb(224, 62, 45);"><strong>Kiểm tra gi&aacute; trị đơn h&agrave;ng</strong>:</span></p>
+            <ul>
+            <li>Nếu tổng gi&aacute; trị đơn h&agrave;ng <strong>&le; 500.000 đ</strong>, kh&ocirc;ng y&ecirc;u cầu đặt cọc.</li>
+            <li>Nếu tổng gi&aacute; trị đơn h&agrave;ng <strong>&gt; 500.000 đ</strong>&nbsp;y&ecirc;u cầu kh&aacute;ch h&agrave;ng đặt cọc <strong>10% gi&aacute; trị đơn h&agrave;ng</strong> v&agrave; khi qu&yacute; kh&aacute;ch nhận được h&agrave;ng sẽ tiến h&agrave;nh thanh to&aacute;n nốt 90% gi&aacute; trị c&ograve;n lại của đơn h&agrave;ng.</li>
+            </ul>
+            </li>
+            <li>
+            <p><span style="color: rgb(224, 62, 45);"><strong>C&aacute;ch th&ocirc;ng b&aacute;o</strong>:</span></p>
+            <ul>
+            <li>Hiển thị th&ocirc;ng b&aacute;o r&otilde; r&agrave;ng tại bước thanh to&aacute;n:
+            <ul>
+            <li>V&iacute; dụ: <em>"Đơn h&agrave;ng của bạn y&ecirc;u cầu đặt cọc 10% gi&aacute; trị, tương đương {số tiền}. Vui l&ograve;ng ho&agrave;n tất thanh to&aacute;n trước để x&aacute;c nhận đơn h&agrave;ng."</em></li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            <li>
+            <p><span style="color: rgb(224, 62, 45);"><strong>Quy tr&igrave;nh xử l&yacute; đơn h&agrave;ng</strong>:</span></p>
+            <ul>
+            <li>Đơn h&agrave;ng vẫn được lưu v&agrave;o cơ sở dữ liệu với trạng th&aacute;i:
+            <ul>
+            <li><code>"Chờ đặt cọc"</code> nếu chưa thanh to&aacute;n tiền cọc.</li>
+            <li><code>"Đ&atilde; đặt cọc"</code> nếu đ&atilde; thanh to&aacute;n đủ 10% tiền đặt cọc.</li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            <li>
+            <p><span style="color: rgb(224, 62, 45);"><strong>Theo d&otilde;i trạng th&aacute;i đơn h&agrave;ng</strong>:</span></p>
+            <ul>
+            <li>Sau một khoảng thời gian (v&iacute; dụ: 24-48h), nếu kh&aacute;ch h&agrave;ng kh&ocirc;ng đặt cọc, c&oacute; thể tự động hủy hoặc nhắc nhở.</li>
+            </ul>
+            </li>
+            </ul>
+          </div>
+        </div>
 
       </div>
 

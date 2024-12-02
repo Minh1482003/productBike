@@ -58,7 +58,7 @@ function caculaToltal () {
 
 async function getProvinces() {
   try {
-    const response = await fetch('http://127.0.0.1:8000/provinces');
+    const response = await fetch('/provinces');
     const data = await response.json();
     return Object.values(data);
   } catch (error) {
@@ -68,7 +68,7 @@ async function getProvinces() {
 
 async function getDistrict(code) {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/districts/${code}`);
+    const response = await fetch(`/districts/${code}`);
     const data = await response.json();
     return Object.values(data);
   } catch (error) {
@@ -78,7 +78,7 @@ async function getDistrict(code) {
 
 async function getWards(code) {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/wards/${code}`);
+    const response = await fetch(`/wards/${code}`);
     const data = await response.json();
     return Object.values(data);
   } catch (error) {
