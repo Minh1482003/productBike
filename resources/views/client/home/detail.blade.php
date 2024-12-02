@@ -101,17 +101,17 @@
                 </div>
                 <p>Thương hiệu: EGA Bike Mã sản phẩm: Đang cập nhật</p>
                 <div class="price-details">
-                    <span class="current-price">{{ number_format($product->Price, 0, ',', '.') . ' VND' }}</span>
-                    <span class="original-price">1.580.000₫</span>
-                    <span class="discount">-28%</span>
+                    @if($product->Buy_or_rent == 'buy')
+                        <span class="current-price">{{ number_format($product->Price, 0, ',', '.') . ' VND' }}</span>
+                    @elseif($product->Buy_or_rent == 'rent')
+                        <div class="row ml-1 fs-5">
+                            <span>Gía thuê 1 ngày/ <span class="fs-4 text-danger fw-bold">{{ number_format($product->Price_day, 0, ',', '.') . ' đ' }}</span></span>
+                            <span>Gía thuê 1 giờ/ <span class="fs-4 text-danger fw-bold">{{ number_format($product->Price_hour, 0, ',', '.') . ' đ' }}</span></span>
+                        </div>
+                    @endif
+        
                 </div>
                 <p>(Tiết kiệm: <b class="tietkiem">12.400.000₫</b>)</p>
-                <div class="color">
-                    <h4>Color:</h4>
-                    <img src="{{ asset('assetsProduct/img/product/img7.webp') }}" alt="Black" title="Black">
-                    <img src="{{ asset('assetsProduct/img/product/img8.webp') }}" alt="Red" title="Red">
-                    <img src="{{ asset('assetsProduct/img/product/img9.webp') }}" alt="Pink" title="Pink">
-                </div>
                 <div class="quantity">
                     <h4>Số lượng:</h4>
                     <button class="btn">-</button>
@@ -119,8 +119,7 @@
                     <button class="btn">+</button>
                 </div>
                 <div class="actions">
-                    <a href="{{ route('cart.create', ['Id_SP' => $product->Id_SP]) }}" class="add-to-cart">THÊM VÀO GIỎ</a> 
-                    <button class="buy-now">MUA NGAY</button>
+                    <button class="add-to-cart">Thuê Ngay</button> 
                 </div>
             </div>
         </div>
@@ -235,5 +234,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="{{ asset('admin/js/script.js') }}"></script>
+
+    <form action="route('rent.order', ['Id_SP' => $product->Id_SP]" method="get"></form>
 </body>
 </html>

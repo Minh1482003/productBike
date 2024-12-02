@@ -16,6 +16,14 @@ require base_path('routes/client/indexRoute.php');
 //Route authentication
 Route::prefix('authen')->group(base_path('routes/auth/Authentication.php'));
 
+//Route vnpay
+Route::prefix('vnpay')->group(base_path('routes/VnPay/VnPayRoute.php'));
+
+
+
+
+
+
 
 
 Route::get('/provinces', function () {

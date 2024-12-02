@@ -30,3 +30,10 @@ Route::post('/cart/checkoutfinal', [HomeController::class, 'checkoutFinal'])->na
 
 Route::patch('/updateUser', [HomeController::class, 'updateUser'])->name('update.User')
   ->middleware(GetInforUser::class);
+
+
+Route::GET('/rent', [HomeController::class, 'productRent'])->name('product.rent')
+->middleware(GetInforUser::class);
+
+Route::GET('/rentOder', [HomeController::class, 'rentOder'])->name('rent.order')
+->middleware(GetInforUser::class);

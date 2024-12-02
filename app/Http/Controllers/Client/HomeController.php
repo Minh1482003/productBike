@@ -37,7 +37,7 @@ class HomeController extends Controller {
     ]);
   }
 
-  //[GET] index
+  //[GET] detail
   public function detail(Request $req) {
     $find = [
       ['Deleted', '=', '0'],
@@ -48,7 +48,7 @@ class HomeController extends Controller {
       $find[] = ['Slug', '=', $req->slug];
     }
    
-    $product = ProductModel::select('Id_SP', 'Slug', 'Name', 'Image', 'Description', 'Price', 'Price_hour', 'Price_day','Quantity')
+    $product = ProductModel::select('Id_SP', 'Slug', 'Name', 'Buy_or_rent','Image', 'Description', 'Price', 'Price_hour', 'Price_day','Quantity')
       ->where($find)
       ->first();
 
@@ -178,7 +178,7 @@ class HomeController extends Controller {
     // Tạo hóa đơn
     $newBill = BillModel::create([
       'Id_KH' => $req->Id_KH, 
-      'Status' => 'Chờ xác nhận', 
+      'Status' => 'Chờ đặt cọc', 
       'Type_bill' => 'buy',
       'Total_price' => $req->toltalPrice
     ]);
@@ -227,12 +227,28 @@ class HomeController extends Controller {
 
     $ok = BillDetailModel::insert($productCart);
 
+    $req->toltalPrice * 0.9;
+
     if($ok){
-      return redirect(route('cart.product'))->with(['type' => 'success', 'message' => 'Đặt hàng thành công']);
+      $vnp_Amount = $req->toltalPrice * 0.1;
+      $vnp_TxnRef = $idBill;
+
+      return redirect()->route('vnpay.create')
+        ->with('vnp_Amount', $vnp_Amount)
+        ->with('vnp_TxnRef', $vnp_TxnRef);
     } else {
       return redirect()->back()->with(['type' => 'success', 'danger' => 'Đặt hàng thất bại!']);
     }
   }
+
+
+
+
+
+
+
+
+
 
   // [PATCH] updateUser
   public function updateUser(Request $req) {
@@ -271,6 +287,48 @@ class HomeController extends Controller {
         'Alert' => "Cập nhật thông tin thất bại!"
       ]);
     }
+  }
+
+  //[GET] rent
+  public function productRent(Request $req) {
+
+    $find = [
+      ['Deleted', '=', '0'],
+      ['Buy_or_rent', '=', 'rent'],
+      ['Status', '=', 'active']
+    ];
+
+    // Render products
+    $productRents = ProductModel::select('Id_SP', 'Slug', 'Name', 'Buy_or_rent', 'Image', 'Price', 'Price_Hour', 'Price_Day','Quantity', 'Status', 'Position')
+      ->where($find)
+      ->take(30)
+      ->orderBy('Position', 'asc')
+      ->get();
+    
+    return view("client/home/productRent", [
+      'products' => $productRents,
+    ]);
+  }
+
+   //[GET] rentoder
+   public function rentOder(Request $req) {
+   
+    $find = [
+      ['Deleted', '=', '0'],
+      ['Buy_or_rent', '=', 'rent'],
+      ['Status', '=', 'active'],
+      ['Id_SP','=', $req->Id_SP]
+    ];
+
+    // Render products
+    $productRent = ProductModel::select('Id_SP', 'Name', 'Buy_or_rent', 'Image', 'Description', 'Price_Hour', 'Price_Day','Quantity', 'Status', 'Position')
+      ->where($find)
+      ->first();
+
+    return view("client/home/rentOrder", [
+      'quantity' => $req->quantity,
+      'productRent' => $productRent,
+    ]);
   }
 }
  

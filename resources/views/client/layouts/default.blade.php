@@ -82,6 +82,15 @@
         <div class="logo">
             <a href="{{ route('home.index') }}"><img src="./assetsHome/img/logo.jpg" alt="" class="logo"></a>
         </div>
+
+        <style>
+          .header__navbar ul li a,
+          .nav--ft ul li a  {
+            font-size: 22px;
+            line-height: 1.6rem;
+          }
+        </style>
+
         <!-- Navbar -->
         <div class="header__navbar">
           <ul class="navbar">
@@ -92,7 +101,7 @@
                   <a href="#" class="link__navbar--items">Phụ tùng xe đạp</a>
                 </li>
                 <li class="navbar__items">
-                    <a href="#" class="link__navbar--items">Thuê xe đạp</a>
+                    <a href="{{ route('product.rent') }}" class="link__navbar--items">Thuê xe đạp</a>
                 </li>
                 <li class="navbar__items">
                     <a href="#" class="link__navbar--items">Liên hệ</a>
