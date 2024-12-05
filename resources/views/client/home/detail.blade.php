@@ -115,11 +115,18 @@
                 <div class="quantity">
                     <h4>Số lượng:</h4>
                     <button class="btn">-</button>
-                    <input type="number" value="1">
+                    <input type="number" value="1" name="quantity-rent">
                     <button class="btn">+</button>
                 </div>
                 <div class="actions">
-                    <button class="add-to-cart">Thuê Ngay</button> 
+                    @if($product->Buy_or_rent == 'buy')
+                    <div class="actions">
+                        <a href="{{ route('cart.create', ['Id_SP' => $product->Id_SP]) }}" class="add-to-cart">THÊM VÀO GIỎ</a> 
+                        <button class="buy-now">MUA NGAY</button>
+                    </div>
+                    @elseif($product->Buy_or_rent == 'rent')
+                    <button class="add-to-cart" btn-submit-rent>Thuê Ngay</button> 
+                    @endif
                 </div>
             </div>
         </div>
@@ -234,7 +241,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="{{ asset('admin/js/script.js') }}"></script>
+    <script src="{{ asset('client/js/script.js') }}"></script>
 
-    <form action="route('rent.order', ['Id_SP' => $product->Id_SP]" method="get"></form>
+    <form action="/rentOder" method="POST" form-submit-rent>
+        @csrf
+        <input hidden type="number" name="IdSP_Rent" value="{{ $product->Id_SP }}">
+        <input hidden type="number" name="Quantity_Rent">
+    </form>
 </body>
 </html>

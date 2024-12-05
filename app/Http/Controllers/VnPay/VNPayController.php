@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\VnPay;
 
 use App\Http\Controllers\Controller;
+use App\Models\BillModel;
+
 use Illuminate\Http\Request;
 
 class VnPayController extends Controller {
@@ -62,6 +64,8 @@ class VnPayController extends Controller {
   }
 
   public function returnPayment(Request $request) {
+    
+   
     $vnp_HashSecret = "D1GU861KDBVURSQJJ3WQH7BEYUU97UCS"; // Chuỗi bí mật
 
     $inputData = $request->all();
@@ -82,6 +86,8 @@ class VnPayController extends Controller {
     }
 
     $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
+
+    BillModel::where('Id_HD', $req->orderId)->update(['Status' => 'Đã cọc chờ xác nhận']);
 
     if ($secureHash == $vnp_SecureHash) {
       if ($inputData['vnp_ResponseCode'] == '24') {

@@ -32,8 +32,11 @@ Route::patch('/updateUser', [HomeController::class, 'updateUser'])->name('update
   ->middleware(GetInforUser::class);
 
 
-Route::GET('/rent', [HomeController::class, 'productRent'])->name('product.rent')
+Route::get('/rent', [HomeController::class, 'productRent'])->name('product.rent')
 ->middleware(GetInforUser::class);
 
-Route::GET('/rentOder', [HomeController::class, 'rentOder'])->name('rent.order')
+Route::post('/rentOder', [HomeController::class, 'rentOder'])->name('rent.order')
+->middleware(GetInforUser::class);
+
+Route::post('/rentSubmit', [HomeController::class, 'rentSubmit'])->name('rent.Submit')
 ->middleware(GetInforUser::class);

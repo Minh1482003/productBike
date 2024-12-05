@@ -1,13 +1,25 @@
-@extends('client/layouts/default')
+@extends('client.layouts.default')
 
 @section('content')
-<div class="container">
-    <div class="alert alert-success">
-        <h2>Thanh toán thành công!</h2>
-        <p>Mã đơn hàng: <strong>{{ $orderId }}</strong></p>
-        <p>Số tiền thanh toán: <strong>{{ number_format($amount, 0, ',', '.') }} VND</strong></p>
-        <p>Cảm ơn bạn đã mua hàng. Chúng tôi sẽ xử lý đơn hàng của bạn trong thời gian sớm nhất.</p>
+<div class="container mt-5">
+    <!-- Alert thông báo thành công -->
+    <div class="alert alert-success p-4 rounded shadow-sm">
+        <h2 class="text-center">Thanh toán thành công!</h2>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <p><strong>Mã đơn hàng:</strong> <span class="text-uppercase">{{ $orderId }}</span></p>
+                <p><strong>Số tiền thanh toán:</strong> <span class="text-success">{{ number_format($amount, 0, ',', '.') }} VND</span></p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Cảm ơn bạn đã mua hàng.</strong></p>
+                <p>Chúng tôi sẽ xử lý đơn hàng của bạn trong thời gian sớm nhất. Vui lòng kiểm tra email để biết thêm thông tin.</p>
+            </div>
+        </div>
     </div>
-    <a href="{{ route('home') }}" class="btn btn-primary">Quay lại trang chủ</a>
+
+    <!-- Nút quay lại trang chủ -->
+    <div class="text-center mt-4">
+        <a href="{{ route('home.index') }}" class="btn btn-primary btn-lg">Quay lại trang chủ</a>
+    </div>
 </div>
 @endsection

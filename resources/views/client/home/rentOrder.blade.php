@@ -24,6 +24,7 @@
               <input hidden type="text" value="{{ $userData->Address }}" input-get-address>
               <div class="form-floating"> 
                 <input type="email" class="form-control"
+                  disabled
                   name="Email" value="{{ $userData->Email }}">
                 <label for="floatingInputGrid">Email:</label>
               </div>
@@ -94,16 +95,17 @@
           <div class="card-body">
             <div class="row d-flex align-items-center">
               <img src="{{$productRent->Image}}" style="width: 100px"> 
-              <span class="col-8">{{$productRent->Name}}</span>
+              <span class="col-7">{{$productRent->Name}}</span>
+              <span class="col">x <span quantity-rent-order>{{ $quantity }}</span></span>
             </div>
+
           </div>
         </div>
 
         <div class="card mt-2">
-          <h5 class="card-header border">Quy định khi thuê xe đạp:</h5>
+          <h5 class="card-header border">Quy tắc thuê xe đạp tại Bike Sop:</h5>
           <div class="card-body">
             <div class="row d-flex align-items-center">
-            <h2><span style="font-size: 14pt;"><strong>Quy định khi thu&ecirc; xe đạp:</strong></span></h2>
             <p>Qu&yacute; kh&aacute;ch h&agrave;ng đặt cọc 1 trong c&aacute;c giấy tờ tuỳ th&acirc;n như sau: Chứng minh nh&acirc;n d&acirc;n ( Identity Card); Hộ chiếu ( Passport) HOẶC Chuyển Tiền 100% gi&aacute; trị xe đạp, Khi kh&aacute;ch trả xe SHOP xe ho&agrave;n trả 100% tiền gi&aacute; trị của xe đạp</p>
             <p>Qu&yacute; kh&aacute;ch h&agrave;ng thực hiện việc đặt cọc khi&nbsp;<strong>thu&ecirc; xe đạp</strong>&nbsp;như sau:</p>
             <p><strong>&nbsp; &nbsp; &ndash; Đối với kh&aacute;ch thu&ecirc; xe&nbsp; :</strong>&nbsp;Gi&aacute; trị của xe + 100% ph&iacute; thu&ecirc; xe</p>
@@ -124,41 +126,48 @@
         <div class="card">
           <h5 class="card-header">Thông tin đơn thuê</h5>
           <div class="card-body">
+            
+            <div class="form-check">
+              <input hidden type="number" value="{{ $productRent->Price_Hour }}" price-hour-rent>
+              <input class="form-check-input" type="radio">
+              <label class="form-check-label" for="checkTypeRent">
+                Thuê theo giờ:  <span class="text-danger">{{ number_format($productRent->Price_Hour, 0, ',', '.')}}</span> đ/giờ
+              </label>
+            </div>
+            <div class="form-check">
+              <input hidden type="number" value="{{ $productRent->Price_Day }}" price-day-rent>
+              <input class="form-check-input" type="radio" name="checkTypeRent">
+              <label class="form-check-label" for="checkTypeRent">
+                Thuê theo ngày: <span class="text-danger">{{ number_format($productRent->Price_Day, 0, ',', '.')}}</span> đ/ngày
+              </label>
+            </div>
 
             <div class="py-2">
               <div class="my-2">
                 <label for="datetime-input">Thời gian bắt đầu  thuê</label>
-                <input type="datetime-local" class="form-control" />
+                <input disabled type="datetime-local" class="form-control" time-start-rent />
               </div>
 
               <div class="my-2">
                 <label for="datetime-input">Thời gian kết thúc thuê</label>
-                <input type="datetime-local" class="form-control" />
+                <input disabled type="datetime-local" class="form-control"  time-end-rent />
               </div>
             </div>
 
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="checkTypeRent">
-              <label class="form-check-label" for="checkTypeRent">
-                Thuê theo giờ:  <span class="text-danger">{{ $productRent->Price_Hour }}</span>đ/giờ
-              </label>
+            <div>
+              <p>Thời lượng thuê xe của bạn là:</p>
+              <p class="text-center fw-bold text-success" 
+              rental-term>0 Ngày 0 giờ 0 phút</p>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="checkTypeRent">
-              <label class="form-check-label" for="checkTypeRent">
-                Thuê theo ngày: <span class="text-danger">{{ $productRent->Price_Day }}</span>đ/ngày
-              </label>
-            </div>
-
 
             <div class="row py-3">
               <span class="col-7" >Tạm tính:</span>
-              <span class="col-5 fs-5 text-end toltal-checkout" >50<span class="price-checkout">₫</span></span>
+              <span class="col-5 fs-5 text-end toltal-checkout"><span tolTal-price-rent>0</span><span class="price-checkout">₫</span></span>
             </div>
             
             <div class="row justify-content-between">
               <span class="col-8 back-cart" btn-backcart><a href="{{ route('cart.product') }}">❮ Quay lại</a></span>
-              <button class="col-3 btn btn-success" button-order>Đặt thuê</button>
+              <button class="col-3 btn btn-success" button-order-rent>Đặt thuê</button>
             </div>
 
           </div>
@@ -168,10 +177,15 @@
     </div>
   </div>
 
-  <form action="{{ route('cart.checkoutfinal') }}" method="POST" 
-    from-submit-checkout>
+  <form hidde action="{{ route('rent.Submit') }}" method="POST" class="d-none"
+    from-submit-order-rent>
     @csrf
-    <input hidden type="number" name="toltalPrice" value="">
+    <input type="number" name="IdSP" value="{{ $productRent->Id_SP }}">
+    <input type="number" name="Quantity" value="{{ $quantity }}">
+    <input type="text" name="timeStartRent" value="">
+    <input type="text" name="timeEndRent" value="">
+    <input type="number" name="ToltalPriceRent" value="">
+    <input type="text" name="rental_term" value="">
   </form>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
@@ -242,14 +243,6 @@ class HomeController extends Controller {
   }
 
 
-
-
-
-
-
-
-
-
   // [PATCH] updateUser
   public function updateUser(Request $req) {
 
@@ -270,7 +263,6 @@ class HomeController extends Controller {
 
     $user = [
       'Name' => $req->NameUD,
-      'Email' => $req->EmailUD,
       'SDT' => $req->SDTUD,
     ]; 
     
@@ -310,14 +302,13 @@ class HomeController extends Controller {
     ]);
   }
 
-   //[GET] rentoder
-   public function rentOder(Request $req) {
-   
+  //[POST] rentoder
+  public function rentOder(Request $req) {
     $find = [
       ['Deleted', '=', '0'],
       ['Buy_or_rent', '=', 'rent'],
       ['Status', '=', 'active'],
-      ['Id_SP','=', $req->Id_SP]
+      ['Id_SP','=', $req->IdSP_Rent]
     ];
 
     // Render products
@@ -326,9 +317,57 @@ class HomeController extends Controller {
       ->first();
 
     return view("client/home/rentOrder", [
-      'quantity' => $req->quantity,
+      'quantity' => $req->Quantity_Rent,
       'productRent' => $productRent,
     ]);
+  }
+
+  // [POST] /rentSubmit
+  public function rentSubmit(Request $req) {
+    // Tạo hóa đơn
+
+    $Rental_start = Carbon::createFromFormat('H:i d/m/Y', $req->timeStartRent);
+    $Rent_expectedEnd = Carbon::createFromFormat('H:i d/m/Y', $req->timeEndRent);
+  
+    $newBill = BillModel::create([
+      'Id_KH' => $req->Id_KH, 
+      'Status' => 'Chờ xác nhận',
+      'Type_bill' => 'rental',
+      'Total_price' => $req->ToltalPriceRent
+    ]);
+
+    //End tạo hóa đơn
+
+    $idBill = $newBill->Id_HD;
+
+    $productData = [
+      'Id_HD' => $idBill,
+      'Id_SP' => $req->IdSP, 
+      'Quantity' => $req->Quantity,
+      'Rental_start' => $Rental_start,
+      'Rental_expectedEnd' => $Rent_expectedEnd,
+      'Rental_term' => $req->rental_term
+    ];
+
+    $productModel = ProductModel::find($req->IdSP);
+    if($productModel){
+      $productModel->Quantity -= $req->Quantity;
+      $productModel->save();
+    }
+  
+    $ok = BillDetailModel::insert($productData);
+
+    if($ok){
+      return view("vnpay/rentalSuccess", [
+        'idBill' => $idBill,
+        'ToltalPriceRent' => $req->ToltalPriceRent,
+        'Rental_start' => $req->Rental_start,
+        'Rental_expectedEnd' => $req->Rental_start,
+        'Rental_term' => $req->rental_term
+      ]);
+    } else {
+      return redirect()->back()->with(['type' => 'success', 'danger' => 'Đặt hàng thất bại!']);
+    }
   }
 }
  
