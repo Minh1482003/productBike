@@ -23,7 +23,7 @@
               @method('PTACH')
               <input hidden type="text" value="{{ $userData->Address }}" input-get-address>
               <div class="form-floating"> 
-                <input type="email" class="form-control"
+                <input type="email" class="form-control" disabled
                   name="Email" value="{{ $userData->Email }}">
                 <label for="floatingInputGrid">Email:</label>
               </div>

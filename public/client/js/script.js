@@ -237,7 +237,7 @@ if(formUserdata){
 //End update address
 
 //Render address 
-const inputGetAddress = document.querySelector('[input-get-address]').value;
+const inputGetAddressA = document.querySelector('[input-get-address]');
 
 async function getAddress(url) {
   try {
@@ -250,7 +250,9 @@ async function getAddress(url) {
 }
 
 const getInforAddress = async ()=> {
-  if(inputGetAddress){
+  if(inputGetAddressA){
+
+    let inputGetAddress = inputGetAddressA.value;
     [provinceId, districtId, wardsId, addressDetail] = inputGetAddress.split('__');
   
     let [NameProvince, ValueProvince] = await getAddress(`https://provinces.open-api.vn/api/p/${provinceId}`);
@@ -273,10 +275,147 @@ const getInforAddress = async ()=> {
     inputDetailAddress.value = addressDetail;
   } 
 }
-if(inputGetAddress){
+if(inputGetAddressA){
   getInforAddress();
 }
 
-
-
 //End render address 
+
+//Submit product rent
+
+const submitRent = document.querySelector("[btn-submit-rent]");
+
+if(submitRent){
+  submitRent.addEventListener("click", ()=>{
+
+    let quantity = document.querySelector("input[name='quantity-rent']").value;
+    let fromSubmitRent = document.querySelector("[form-submit-rent]");
+    
+    fromSubmitRent.Quantity_Rent.value = quantity;
+    // console.log(fromSubmitRent.action);
+    fromSubmitRent.submit();
+  });
+}
+//End product rent
+
+//Handel time rent
+const checkTypeRent = document.querySelector("input[name='checkTypeRent']");
+
+function caculaTimeRent (startTimeRent, endTimeRent){
+  const diffMs = endTimeRent - startTimeRent;
+
+  // 1 ngày = 24 giờ = 24 * 60 * 60 * 1000 ms
+  // 1 giờ = 60 phút = 60 * 60 * 1000 ms 
+  // 1 phút = 60 giây = 60 * 1000 ms
+
+  const Days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const Hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const Minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  return {
+    TimeStart : startTimeRent.toLocaleString('vi-VN', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }),
+    TimeEnd : endTimeRent.toLocaleString('vi-VN', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }),
+    Day: Days,
+    Hour: Hours,
+    Minute: Minutes
+  }
+}
+
+if(checkTypeRent){
+  let timeStartRent = "";
+  let timeEndRent = "";
+  let rental_term = "";
+  let tolTalPriceRent = 0;
+  
+  let startTimeRent = document.querySelector("[time-start-rent]");
+  let endTimeRent = document.querySelector("[time-end-rent]");
+
+  let priceHour = document.querySelector("[price-hour-rent]").value;
+  let priceDay = document.querySelector("[price-day-rent]").value;
+
+  let quantity = document.querySelector("[quantity-rent-order]").innerHTML;
+  const rentalTerm = document.querySelector("[rental-term]");
+  
+  let tolTalRent = document.querySelector("[tolTal-price-rent]");
+
+  checkTypeRent.addEventListener("change", () =>{
+    startTimeRent.removeAttribute("disabled");
+    endTimeRent.removeAttribute("disabled");
+  });
+
+  [endTimeRent, startTimeRent].forEach((item) =>{
+    item.addEventListener("change", () =>{
+      if(endTimeRent.value){
+        if(startTimeRent.value > endTimeRent.value){
+          alert("Ngày bắt đầu thuê phải bé hơn ngày kết thúc!");
+          return;
+        }
+
+        const startTime = new Date(startTimeRent.value);
+        const endTime = new Date(endTimeRent.value);
+    
+        let resultTime = caculaTimeRent(startTime, endTime);
+    
+        rentalTerm.innerHTML = `${resultTime.Day} Ngày / ${resultTime.Hour} Giờ / ${resultTime.Minute} Phút`;
+        rental_term = `${resultTime.Day} Ngày / ${resultTime.Hour} Giờ / ${resultTime.Minute} Phút`;
+
+        let priceRent = 0;
+        if(resultTime.Day > 0 ){
+          priceRent += priceDay * resultTime.Day;
+        }
+        if(resultTime.Hour > 0){
+          priceRent += (priceDay /24) * resultTime.Hour;
+        }  
+    
+        priceRent *= parseInt(quantity);
+        
+        //Data submit
+        timeStartRent = resultTime.TimeStart;
+        timeEndRent = resultTime.TimeEnd;
+        tolTalPriceRent = priceRent;
+        //End data submit
+    
+        const formatVND = new Intl.NumberFormat('vi-VN', {
+          currency: 'VND'
+        });
+    
+        tolTalRent.innerHTML = formatVND.format(priceRent);
+      }
+     
+    });
+  })
+  
+  let btnSubmit = document.querySelector("[button-order-rent]");
+  btnSubmit.addEventListener("click", ()=>{
+    const formSubmit = document.querySelector("[from-submit-order-rent]");
+    if(tolTalPriceRent == 0){
+      alert("Vui lòng chọn thời gian thuê xe trước!");
+      return;
+    }
+    formSubmit.timeStartRent.value = timeStartRent;
+    formSubmit.timeEndRent.value = timeEndRent;
+    formSubmit.ToltalPriceRent.value = tolTalPriceRent;
+    formSubmit.rental_term.value = rental_term;
+
+    formSubmit.submit();
+  });
+  
+
+}
+//End handel time rent
