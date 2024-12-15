@@ -20,7 +20,7 @@
               <th class="col-2">Ngày đặt hàng</th>
               <th>Loại hóa đơn</th>
               <th>Trạng thái</th>
-              <th>Tổng tiền</th>
+              <th>Tổng tiền(VND)</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -30,18 +30,18 @@
                 <td>
                   <input type="checkbox" name="id" value= "{{ $item->Id_HD }}">
                 </td>
-                <td>{{ $index + 1 }}</td>
+                <td class="fw-bold">{{ $index + 1 }}</td>
                 <td>{{ $item->Id_HD }}</td>
                 <td>{{ $item->Name }}</td>
                 <td>{{ $item->Oder_date }}</td>
-                <td>
-                  @if($item->Type_bill == 'buy') Cho mua
-                  @elseif($item->Type_bill == 'rent') Cho thuê
+                <td class="fw-bold">
+                  @if($item->Type_bill == 'buy') Mua xe
+                  @elseif($item->Type_bill == 'rent') Thuê xe
                   @else Cho phép mua và thuê
                   @endif
                 </td>
                 <td>{{ $item->Status }}</td>
-                <td>{{ number_format($item->Total_price, 0, ',', '.') . ' VND' }}</td>
+                <td>{{ number_format($item->Total_price, 0, ',', '.') }}</td>
           
                 <td class="btn-change">
                   <a class="mx-2"

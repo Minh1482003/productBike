@@ -31,18 +31,18 @@
             <th>Tên sản phẩm</th>
             <th>Hình ảnh</th>
             <th>Số lượng</th>
-            <th>Thanh tiền</th>
+            <th>Thanh tiền(VND)</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($billDetails as $index => $item)
             <tr>
-              <td>{{ $index + 1 }}</td>
+              <td class="fw-bold">{{ $index + 1 }}</td>
               <td>{{ $item->Id_SP }}</td>
               <td>{{ $item->NameProduct }}</td>
               <td><img src="{{ $item->Image }}" style="width: 60px"></td>
-              <td>{{ $item->Quantity }}</td>
-              <td>{{ number_format($item->Price, 0, ',', '.') . ' VND' }}</td>
+              <td>x{{ $item->Quantity }}</td>
+              <td>{{ number_format($item->Price, 0, ',', '.')}}</td>
             </tr>
           @endforeach
         </tbody>

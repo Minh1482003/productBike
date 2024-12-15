@@ -361,8 +361,8 @@ class HomeController extends Controller {
       return view("vnpay/rentalSuccess", [
         'idBill' => $idBill,
         'ToltalPriceRent' => $req->ToltalPriceRent,
-        'Rental_start' => $req->Rental_start,
-        'Rental_expectedEnd' => $req->Rental_start,
+        'Rental_start' => $Rental_start,
+        'Rental_expectedEnd' => $Rental_start,
         'Rental_term' => $req->rental_term
       ]);
     } else {
