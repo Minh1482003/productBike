@@ -7,7 +7,7 @@ use App\Models\BillModel;
 use Illuminate\Http\Request;
 
 class VnPayController extends Controller {
-  public function createPayment(Request $request) {
+  public function createPayment(Request $req) {
     $id_oder = session('vnp_TxnRef');
     $deposit = session('vnp_Amount');
 
@@ -21,8 +21,8 @@ class VnPayController extends Controller {
     $vnp_OrderType = "billpayment";
     $vnp_Amount = $deposit * 100; // Số tiền thanh toán
     $vnp_Locale = "vn";
-    $vnp_BankCode = $request->bank_code;
-    $vnp_IpAddr = $request->ip();
+    $vnp_BankCode = $req->bank_code;
+    $vnp_IpAddr = $req->ip();
 
     $inputData = array(
       "vnp_Version" => "2.1.0",
@@ -63,12 +63,12 @@ class VnPayController extends Controller {
     return redirect()->to($vnp_Url);
   }
 
-  public function returnPayment(Request $request) {
+  public function returnPayment(Request $req) {
     
    
     $vnp_HashSecret = "D1GU861KDBVURSQJJ3WQH7BEYUU97UCS"; // Chuỗi bí mật
 
-    $inputData = $request->all();
+    $inputData = $req->all();
 
     $vnp_SecureHash = $inputData['vnp_SecureHash'];
     unset($inputData['vnp_SecureHash']);

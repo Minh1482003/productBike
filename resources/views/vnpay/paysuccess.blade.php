@@ -4,11 +4,11 @@
 <div class="container mt-5">
     <!-- Alert thông báo thành công -->
     <div class="alert alert-success p-4 rounded shadow-sm">
-        <h2 class="text-center">Thanh toán thành công!</h2>
+        <h2 class="text-center">Đặt hàng thành công!</h2>
         <div class="row mt-4">
             <div class="col-md-6">
                 <p><strong>Mã đơn hàng:</strong> <span class="text-uppercase">{{ $orderId }}</span></p>
-                <p><strong>Số tiền thanh toán:</strong> <span class="text-success">{{ number_format($amount, 0, ',', '.') }} VND</span></p>
+                <p><strong>Số tiền đã đặt cọc:</strong> <span class="text-success">{{ number_format($amount, 0, ',', '.') }} VND</span></p>
             </div>
             <div class="col-md-6">
                 <p><strong>Cảm ơn bạn đã mua hàng.</strong></p>
